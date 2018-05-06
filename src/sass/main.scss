@@ -1,0 +1,8 @@
+// App's variables as well as Bootstrap overrides
+@import './base/variables';
+
+// Boostrap itself
+@import "~bootstrap/scss/bootstrap";
+
+// General styling
+@import './general';
