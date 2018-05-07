@@ -36,9 +36,26 @@ module.exports = {
             {
                 test: /\.s?[ac]ss$/,
                 use: [
-                    inProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-                    'css-loader',
-                    'sass-loader'
+                    {
+                        loader: inProduction ? MiniCssExtractPlugin.loader : 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: function () {
+                                return [
+                                    require('precss'),
+                                    require('autoprefixer')
+                                ];
+                            }
+                        }
+                    },
+                    {
+                        loader: 'sass-loader'
+                    }
                 ]
             }
         ]
