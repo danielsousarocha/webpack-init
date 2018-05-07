@@ -4,10 +4,16 @@
   "description": "Basic build for SPA pages made with Webpack 4 and Bootstrap 4.",
   "main": "./src/js/index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --hot --inline",
+    "dev": "webpack-dev-server --mode development --hot",
     "prod": "cross-env NODE_ENV='production' webpack -p"
   },
-  "keywords": ["webpack", "babel", "bootstrap", "sass", "jquery"],
+  "keywords": [
+    "webpack",
+    "babel",
+    "bootstrap",
+    "sass",
+    "jquery"
+  ],
   "author": "Daniel Sousa Rocha",
   "license": "ISC",
   "devDependencies": {
