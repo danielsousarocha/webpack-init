@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 const inProduction = process.env.NODE_ENV === 'production' ? true : false;
 const publicPath = path.resolve(__dirname, 'public');
@@ -37,10 +38,10 @@ module.exports = {
                 test: /\.s?[ac]ss$/,
                 use: [
                     {
-                        loader: inProduction ? MiniCssExtractPlugin.loader : 'style-loader'
+                        loader: MiniCssExtractPlugin.loader
                     },
                     {
-                        loader: 'css-loader'
+                        loader: 'css-loader?url=false'
                     },
                     {
                         loader: 'postcss-loader',
@@ -57,12 +58,28 @@ module.exports = {
                         loader: 'sass-loader'
                     }
                 ]
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            name: '[path][name].[ext]',
+                            limit: 1000000
+                        }
+                    }
+                ]
             }
         ]
     },
 
     plugins: [
-        new CleanWebpackPlugin(['public']),
+        new CleanWebpackPlugin([
+            'public/assets/css/*',
+            'public/assets/js/*',
+            'public/*.html',
+        ]),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
@@ -70,14 +87,16 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: './src/index.html',
+            filename: './index.html',
             hash: true,
             minify: {
-                collapseWhitespace: true
+                collapseWhitespace: inProduction
             }
         }),
         new MiniCssExtractPlugin({
             filename: "./assets/css/[name].css",
             chunkFilename: "[id].css"
-        })
+        }),
+        new LiveReloadPlugin()
     ]
 }
