@@ -42,7 +42,10 @@ module.exports = {
                         loader: MiniCssExtractPlugin.loader
                     },
                     {
-                        loader: 'css-loader?url=false'
+                        loader: 'css-loader',
+                        options: {
+                            url: false
+                        }
                     },
                     {
                         loader: 'postcss-loader',
@@ -61,13 +64,22 @@ module.exports = {
                 ]
             },
             {
+                test: /\.html$/,
+                use: {
+                    loader: 'html-loader',
+                    options: {
+                        root: './images'
+                    }
+                }
+            },
+            {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 use: [
                     {
                         loader: 'url-loader',
                         options: {
-                            name: '[path][name].[ext]',
-                            limit: 1000000
+                            name: 'assets/images/[name].[ext]',
+                            limit: 8192
                         }
                     }
                 ]
@@ -76,11 +88,7 @@ module.exports = {
     },
 
     plugins: [
-        new CleanWebpackPlugin([
-            'public/assets/css/*',
-            'public/assets/js/*',
-            'public/*.html',
-        ]),
+        new CleanWebpackPlugin('public'),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
