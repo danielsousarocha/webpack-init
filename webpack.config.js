@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LiveReloadPlugin = require('webpack-livereload-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const inProduction = process.env.NODE_ENV === 'production' ? true : false;
 const publicPath = path.resolve(__dirname, 'public');
@@ -86,6 +87,7 @@ module.exports = {
             'window.jQuery': 'jquery'
         }),
         new HtmlWebpackPlugin({
+            title: 'Webpack Default Build',
             template: './src/index.html',
             filename: './index.html',
             hash: true,
@@ -96,6 +98,10 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "./assets/css/[name].css",
             chunkFilename: "[id].css"
+        }),
+        new FaviconsWebpackPlugin({
+            logo: './src/images/favicon.png',
+            prefix: 'favicons/'
         }),
         new LiveReloadPlugin()
     ]
