@@ -2,3 +2,9 @@ body {
     background-color: $bg-color;
     color: $text-color;
 }
+
+.night-sky {
+    color: invert($text-color);
+    background: url('../images/nightsky.jpg') top center / cover no-repeat darkblue;
+    height: 100vh;
+}
